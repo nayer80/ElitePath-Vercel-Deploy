@@ -47,6 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
 			navCenter.setAttribute('aria-hidden', 'true');
 			// remove from tab sequence when closed
 			setMenuTabIndex('-1');
+			// move focus back to the hamburger so keyboard users are not trapped
+			try { hamburger.focus(); } catch (e) { /* ignore focus errors */ }
 			announce('Menu closed');
 		}
 	}
