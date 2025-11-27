@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Elite Path — Travel</title>
+	<link rel="stylesheet" href="styles.css">
+	<!-- Font Awesome for nav icons -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-C8C+9b3z1+YqKkKQY8lq6c3K0y5mWq9QG1Kx1Ff9YvV0w5eQ1r0eZrZg2hKz8Yz1q1G6rO1Y2uQY1e2Z3b4c5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<!-- moved styles to styles.css -->
+</head>
+<body>
+
+	<header class="site-header">
+		<div class="header-inner" aria-hidden="true">
+			<div class="brand">Elite Path</div>
+			<div class="brand-sub">Explore. Book. Travel.</div>
+		</div>
+	</header>
+
+	<nav class="primary-nav-red" aria-label="Primary navigation">
+		<div class="nav-left">
+			<div class="brand">Elite Path</div>
+		</div>
+
+		<div class="nav-center">
+			<a href="#holidays"><i class="fa-solid fa-umbrella-beach" aria-hidden="true"></i><span>Holidays</span></a>
+			<a href="#flights"><i class="fa-solid fa-plane" aria-hidden="true"></i><span>Flights</span></a>
+			<a href="#hotels"><i class="fa-solid fa-hotel" aria-hidden="true"></i><span>Hotels</span></a>
+			<a href="#insurance"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i><span>Insurance</span></a>
+			<a href="#visa"><i class="fa-solid fa-passport" aria-hidden="true"></i><span>Visa</span></a>
+			<a href="#explore"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span>Explore UAE</span></a>
+		</div>
+
+		<div class="nav-right">
+			<button class="hamburger" aria-label="Open menu">
+				<span></span>
+				<span></span>
+				<span></span>
+			</button>
+		</div>
+	</nav>
+
+	<main>
+		<section class="container">
+			<div class="search-widget" role="search" aria-label="Search for destinations">
+				<h1 class="search-title">Where will Elite Path take you?</h1>
+				<input type="search" placeholder="Where you want to go" aria-label="Destination search" />
+				<div>
+					<button class="search-btn">SEARCH</button>
+				</div>
+			</div>
+
+			<section class="trending">
+				<h2>Trending Tours</h2>
+				<div class="tours-grid">
+					<div class="tour-card">
+						<div class="thumb"><img src="https://picsum.photos/seed/tour1/640/360" alt="Tour 1 image"></div>
+						<div>
+							<div class="title">Sample Tour 1</div>
+							<div class="meta">3 nights • Starting from $499</div>
+						</div>
+					</div>
+
+					<div class="tour-card">
+						<div class="thumb"><img src="https://picsum.photos/seed/tour2/640/360" alt="Tour 2 image"></div>
+						<div>
+							<div class="title">Sample Tour 2</div>
+							<div class="meta">5 nights • Starting from $799</div>
+						</div>
+					</div>
+
+					<div class="tour-card">
+						<div class="thumb"><img src="https://picsum.photos/seed/tour3/640/360" alt="Tour 3 image"></div>
+						<div>
+							<div class="title">Sample Tour 3</div>
+							<div class="meta">4 nights • Starting from $659</div>
+						</div>
+					</div>
+
+					<div class="tour-card">
+						<div class="thumb"><img src="https://picsum.photos/seed/tour4/640/360" alt="Tour 4 image"></div>
+						<div>
+							<div class="title">Sample Tour 4</div>
+							<div class="meta">7 nights • Starting from $1199</div>
+						</div>
+					</div>
+
+				</div>
+			</section>
+		</section>
+
+		<!-- Visa Page Section -->
+		<section id="visa" class="container visa-section">
+			<div class="visa-page">
+				<h1 class="visa-title">Visa</h1>
+				<div class="visa-card-container">
+					<form class="visa-form" aria-label="Visa application form">
+						<div class="field">
+							<label for="destination">Destination</label>
+							<select id="destination" name="destination">
+								<option value="">Select destination</option>
+								<option>United Arab Emirates</option>
+								<option>India</option>
+								<option>United Kingdom</option>
+							</select>
+						</div>
+
+						<div class="field">
+							<label for="nationality">Nationality</label>
+							<select id="nationality" name="nationality">
+								<option value="">Select nationality</option>
+								<option>United States</option>
+								<option>India</option>
+								<option>Canada</option>
+							</select>
+						</div>
+
+						<div class="field">
+							<button type="submit" class="apply-btn">APPLY NOW</button>
+						</div>
+					</form>
+				</div>
+
+				<section class="visa-listing">
+					<h2 class="listing-title">Available Visas</h2>
+					<div class="visa-grid">
+						<div class="visa-card">
+								<div class="visa-thumb"><img src="https://picsum.photos/seed/visa1/480/260" alt="UAE"></div>
+								<div class="country">United Arab Emirates</div>
+								<div class="duration">Duration: 30 days</div>
+								<div class="price">Price: $120</div>
+						</div>
+
+						<div class="visa-card">
+							<div class="visa-thumb"><img src="https://picsum.photos/seed/visa2/480/260" alt="India"></div>
+							<div class="country">India</div>
+							<div class="duration">Duration: 60 days</div>
+							<div class="price">Price: $80</div>
+						</div>
+
+						<div class="visa-card">
+							<div class="visa-thumb"><img src="https://picsum.photos/seed/visa3/480/260" alt="UK"></div>
+							<div class="country">United Kingdom</div>
+							<div class="duration">Duration: 180 days</div>
+							<div class="price">Price: $210</div>
+						</div>
+
+						<div class="visa-card">
+							<div class="visa-thumb"><img src="https://picsum.photos/seed/visa4/480/260" alt="Canada"></div>
+							<div class="country">Canada</div>
+							<div class="duration">Duration: 90 days</div>
+							<div class="price">Price: $199</div>
+						</div>
+
+						<div class="visa-card">
+							<div class="visa-thumb"><img src="https://picsum.photos/seed/visa5/480/260" alt="Australia"></div>
+							<div class="country">Australia</div>
+							<div class="duration">Duration: 90 days</div>
+							<div class="price">Price: $230</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</section>
+	</main>
+
+	<script src="script.js"></script>
+</body>
+</html>

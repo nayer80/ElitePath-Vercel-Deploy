@@ -1,0 +1,197 @@
+:root{
+	--primary: #D92027;
+	--text-on-primary: #ffffff;
+	--max-width: 1100px;
+	--menu-duration: 450ms;
+	--menu-ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Base */
+html,body{height:100%;margin:0;font-family:Arial, Helvetica, sans-serif;color:#111;background:#f7f7f7}
+body{padding-top:64px}
+a{color:inherit}
+
+/* Header */
+.site-header{position:fixed;top:0;left:0;right:0;height:0;background:transparent;border-bottom:none;display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:40}
+.header-inner{display:flex;align-items:center;gap:12px}
+.header-inner[aria-hidden="true"]{display:none}
+.brand{font-weight:700;font-size:1.25rem;color:#111}
+.brand-sub{font-size:.9rem;color:#666}
+.hamburger{background:transparent;border:0;padding:8px;display:inline-flex;flex-direction:column;gap:3px;cursor:pointer}
+.hamburger span{display:block;width:22px;height:2px;background:#111}
+a{color:inherit}
+
+/* Primary navigation bar styled like the target site */
+.primary-nav-red{
+	background:var(--primary);
+	color:var(--text-on-primary);
+	display:flex;
+	align-items:center;
+	justify-content:space-between;
+	gap:8px;
+	padding:0 18px; /* horizontal padding */
+	height:64px; /* fixed height to align items exactly */
+	position:sticky;
+	top:0;
+	z-index:30;
+}
+
+.nav-left{display:flex;align-items:center}
+.nav-left .brand{color:var(--text-on-primary);font-weight:800;font-size:1.05rem}
+.nav-center{display:flex;gap:6px;align-items:center;justify-content:center}
+.nav-center a{
+	color:var(--text-on-primary);
+	text-decoration:none;
+	font-weight:600;
+	font-size:15px;         /* tuned for vertical balance */
+	line-height:20px;      /* precise line-height to control vertical centering */
+	padding:10px 18px;     /* slightly reduced vertical padding for tighter fit */
+	display:inline-flex;
+	align-items:center;
+	gap:10px;
+	border-radius:6px;
+}
+.nav-center a i{font-size:1.05rem;line-height:1}
+.nav-center a span{margin-left:6px}
+.nav-right{display:flex;align-items:center}
+.nav-right .hamburger{margin-left:6px}
+.nav-right .hamburger span{background:var(--text-on-primary)}
+
+/* Container helper used in the page */
+.container{max-width:var(--max-width);margin:28px auto;padding:0 16px}
+
+/* Search widget */
+.search-widget{background:#fff;padding:36px 28px;border-radius:10px;box-shadow:0 6px 18px rgba(12,20,30,0.06);text-align:center}
+.search-widget input[type="search"]{width:100%;max-width:720px;padding:20px 18px;font-size:1.08rem;border:1px solid #e6e6e6;border-radius:8px;margin-bottom:20px}
+.search-widget .search-btn{
+	display:inline-block;
+	margin-top:8px;
+	margin-bottom:18px; /* explicit bottom margin to control spacing under button */
+	padding:14px 16px;
+	background:var(--primary);
+	color:var(--text-on-primary);
+	border:0;border-radius:8px;
+	font-weight:700;font-size:1rem;
+	cursor:pointer;
+	width:90%;
+	max-width:520px;
+	font-family:Arial, Helvetica, sans-serif;
+}
+
+.search-title{margin:0 0 12px 0;font-size:1.35rem}
+
+
+/* Trending Tours grid */
+.trending{margin-top:20px}
+.trending h2{margin:0 0 12px 0;font-size:1.25rem}
+.tours-grid{
+	display:grid;
+	grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+	gap:16px; /* slightly larger gap for clearer separation */
+}
+.tour-card{background:#fff;padding:14px;border-radius:8px;min-height:170px;display:flex;flex-direction:column;justify-content:space-between;border:1px solid #eee}
+.tour-card .thumb{height:120px;overflow:hidden;border-radius:6px;margin-bottom:12px}
+.tour-card .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.tour-card .title{font-weight:700}
+.tour-card .meta{font-size:.9rem;color:#666}
+
+/* Responsive adjustments */
+@media (min-width:900px){
+	.nav-center{gap:12px}
+	.nav-center a{padding:12px 22px}
+	.search-widget .search-btn{width:320px}
+}
+
+/* Mobile menu styles (class-based) */
+@media (max-width:899px){
+	/* mobile: hide nav-center visually via max-height and opacity so we can animate it */
+	.nav-center{
+		display:flex;
+		flex-direction:column;
+		background:var(--primary);
+		position:absolute;
+		left:0;
+		right:0;
+		top:64px;
+		padding:12px 16px;
+		gap:8px;
+		box-shadow:0 10px 30px rgba(0,0,0,0.12);
+		max-height:0; /* collapsed */
+		overflow:hidden;
+		opacity:0;
+		transform:translateY(-8px);
+		transition: max-height var(--menu-duration) var(--menu-ease), opacity var(--menu-duration) var(--menu-ease), transform var(--menu-duration) var(--menu-ease);
+		pointer-events:none;
+	}
+
+	/* when nav has .open, expand the panel smoothly */
+	.primary-nav-red.open{
+		position:fixed;
+		top:0;
+		left:0;
+		right:0;
+		z-index:60;
+	}
+	.primary-nav-red.open .nav-center{
+		max-height:520px; /* enough to show menu items */
+		opacity:1;
+		transform:translateY(0);
+		pointer-events:auto;
+	}
+	.primary-nav-red.open .nav-center a{
+		padding:10px 12px;
+		width:100%;
+		border-radius:6px;
+		background:rgba(255,255,255,0.03);
+	}
+	/* show hamburger always on mobile */
+	.nav-right .hamburger{display:inline-flex}
+
+	/* staggered fade/slide for menu items */
+	.nav-center a{
+		opacity:0;
+		transform:translateY(8px);
+		transition: opacity var(--menu-duration) var(--menu-ease), transform var(--menu-duration) var(--menu-ease);
+		transition-delay: 0ms;
+	}
+	.primary-nav-red.open .nav-center a{
+		opacity:1;
+		transform:translateY(0);
+	}
+	.primary-nav-red.open .nav-center a:nth-child(1){ transition-delay: 70ms; }
+	.primary-nav-red.open .nav-center a:nth-child(2){ transition-delay: 140ms; }
+	.primary-nav-red.open .nav-center a:nth-child(3){ transition-delay: 210ms; }
+	.primary-nav-red.open .nav-center a:nth-child(4){ transition-delay: 280ms; }
+	.primary-nav-red.open .nav-center a:nth-child(5){ transition-delay: 350ms; }
+	.primary-nav-red.open .nav-center a:nth-child(6){ transition-delay: 420ms; }
+}
+
+/* Visa page styles */
+.visa-page{font-family:Arial, Helvetica, sans-serif}
+.visa-section{margin-top:28px}
+.visa-title{margin:0 0 16px 0;font-size:1.5rem}
+.visa-card-container{margin-bottom:18px}
+.listing-title{margin:0 0 12px 0;font-size:1.25rem}
+.visa-form{background:#fff;padding:20px;border-radius:10px;box-shadow:0 8px 24px rgba(12,20,30,0.06);max-width:760px;margin:0 auto}
+.visa-form .field{margin-bottom:12px;display:flex;flex-direction:column;align-items:stretch}
+.visa-form label{font-weight:600;margin-bottom:6px}
+.visa-form select,.visa-form input{padding:12px;border:1px solid #e6e6e6;border-radius:6px;font-size:1rem}
+.apply-btn{background:var(--primary);color:var(--text-on-primary);border:0;padding:14px 20px;border-radius:8px;font-weight:800;cursor:pointer;width:100%;max-width:420px;margin:0 auto;display:block}
+
+/* Visa listing grid */
+.visa-listing{margin-top:20px}
+.visa-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.visa-card{background:#fff;border:1px solid #eee;padding:14px;border-radius:8px;display:flex;flex-direction:column;gap:10px}
+.visa-card .visa-thumb{height:110px;overflow:hidden;border-radius:6px}
+.visa-card .visa-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.visa-card .country{font-weight:700;font-size:1.05rem}
+.visa-card .duration{color:#666}
+.visa-card .price{margin-top:auto;font-weight:800;color:var(--primary)}
+
+@media(min-width:900px){
+	.visa-form{padding:28px}
+	.visa-form .field{flex-direction:row;gap:12px}
+	.visa-form label{min-width:110px;align-self:center;margin:0}
+	.visa-form select{flex:1}
+}
+
