@@ -2,8 +2,8 @@
 	--primary: #D92027;
 	--text-on-primary: #ffffff;
 	--max-width: 1100px;
-	--menu-duration: 2089ms;
-	--menu-ease: cubic-bezier(0.0000, 1.0000, 1.0000, 0.0000);
+	--menu-duration: 2358ms;
+	--menu-ease: cubic-bezier(0.0000, 1.0000, 0.0000, 0.9127);
 }
 
 /* Utility: visually hidden (for ARIA live region) */
