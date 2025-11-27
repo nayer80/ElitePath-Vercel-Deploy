@@ -3,7 +3,15 @@ document.addEventListener('DOMContentLoaded', () => {
 	const nav = document.querySelector('.primary-nav-red');
 	const hamburger = document.querySelector('.nav-right .hamburger');
 	const navCenter = document.querySelector('.nav-center');
-    const menuLive = document.getElementById('menu-live');
+	const menuLive = document.getElementById('menu-live');
+
+	// helper to update tabindex for menu items; value should be string '0' or '-1'
+	function setMenuTabIndex(value) {
+		const items = navCenter.querySelectorAll('a[role="menuitem"]');
+		items.forEach(item => {
+			try { item.setAttribute('tabindex', String(value)); } catch (e) { /* ignore */ }
+		});
+	}
 
 	if (!hamburger || !nav || !navCenter) return;
 
@@ -12,6 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	hamburger.setAttribute('aria-controls', 'primary-nav-center');
 	navCenter.id = 'primary-nav-center';
 
+	// ensure menu items are not tabbable initially when menu is closed
+	setMenuTabIndex('-1');
+
 	function setOpen(open) {
 		const isOpen = typeof open === 'boolean' ? open : !nav.classList.contains('open');
 		if (isOpen) {
@@ -19,6 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
 			hamburger.classList.add('open');
 			hamburger.setAttribute('aria-expanded', 'true');
 			navCenter.setAttribute('aria-hidden', 'false');
+			// make menu items tabbable again
+			setMenuTabIndex('0');
 			// when opened, focus the first menuitem for keyboard navigation
 			const items = navCenter.querySelectorAll('a[role="menuitem"]');
 			if (items && items.length) {
@@ -32,6 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
 			hamburger.classList.remove('open');
 			hamburger.setAttribute('aria-expanded', 'false');
 			navCenter.setAttribute('aria-hidden', 'true');
+			// remove from tab sequence when closed
+			setMenuTabIndex('-1');
 			announce('Menu closed');
 		}
 	}
