@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const nav = document.querySelector('.primary-nav-red');
 	const hamburger = document.querySelector('.nav-right .hamburger');
 	const navCenter = document.querySelector('.nav-center');
+    const menuLive = document.getElementById('menu-live');
 
 	if (!hamburger || !nav || !navCenter) return;
 
@@ -22,12 +23,16 @@ document.addEventListener('DOMContentLoaded', () => {
 			const items = navCenter.querySelectorAll('a[role="menuitem"]');
 			if (items && items.length) {
 				items[0].focus();
+				// announce the menu opened and the first focused item
+				announce('Menu opened');
+				setTimeout(() => announceCurrentFocused(), 120);
 			}
 		} else {
 			nav.classList.remove('open');
 			hamburger.classList.remove('open');
 			hamburger.setAttribute('aria-expanded', 'false');
 			navCenter.setAttribute('aria-hidden', 'true');
+			announce('Menu closed');
 		}
 	}
 
@@ -70,10 +75,38 @@ document.addEventListener('DOMContentLoaded', () => {
 			idx = (idx - 1 + items.length) % items.length;
 		}
 		items[idx].focus();
+		// announce the newly focused item
+		setTimeout(() => announceCurrentFocused(), 60);
+	}
+
+	function announce(text) {
+		if (!menuLive) return;
+		// Clear then set so SR picks up repeated announcements
+		menuLive.textContent = '';
+		setTimeout(() => { menuLive.textContent = text; }, 60);
+	}
+
+	function announceCurrentFocused() {
+		if (!menuLive) return;
+		const items = Array.from(navCenter.querySelectorAll('a[role="menuitem"]'));
+		const active = document.activeElement;
+		const idx = items.indexOf(active);
+		let label = '';
+		if (active) {
+			label = (active.innerText || active.textContent || '').trim();
+		}
+		if (idx >= 0) {
+			announce(`${label}. ${idx + 1} of ${items.length}`);
+		} else if (label) {
+			announce(label);
+		}
 	}
 
 	// attach keyboard handler to the menu container so arrow keys are managed
 	navCenter.addEventListener('keydown', handleKeyboardNavigation);
+
+	// announce focus changes triggered by mouse or programmatic focus
+	navCenter.addEventListener('focusin', () => { setTimeout(() => announceCurrentFocused(), 40); });
 
 	// toggle on click
 	hamburger.addEventListener('click', (e) => {
