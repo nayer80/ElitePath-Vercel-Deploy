@@ -37,15 +37,33 @@ document.addEventListener('DOMContentLoaded', () => {
 		const items = Array.from(navCenter.querySelectorAll('a[role="menuitem"]'));
 		if (!items.length) return;
 		const key = e.key;
-		if (key !== 'ArrowDown' && key !== 'ArrowUp') return;
+		// handle navigation keys: ArrowDown/ArrowUp, PageDown/PageUp, Home/End
+		if (!['ArrowDown','ArrowUp','PageDown','PageUp','Home','End'].includes(key)) return;
 		e.preventDefault();
 		let idx = items.indexOf(document.activeElement);
+		// if focus is not within the items, send focus to start/end depending on key
 		if (idx === -1) {
-			// if nothing focused inside, focus first or last depending on key
-			idx = key === 'ArrowDown' ? 0 : items.length - 1;
-			items[idx].focus();
+			if (key === 'ArrowDown' || key === 'PageDown' || key === 'Home') {
+				items[0].focus();
+				return;
+			}
+			if (key === 'ArrowUp' || key === 'PageUp' || key === 'End') {
+				items[items.length - 1].focus();
+				return;
+			}
+		}
+		// handle Home/End explicitly
+		if (key === 'Home') {
+			items[0].focus();
 			return;
 		}
+		if (key === 'End') {
+			items[items.length - 1].focus();
+			return;
+		}
+		// PageUp/PageDown mirror ArrowUp/ArrowDown behavior
+		if (key === 'PageDown') key = 'ArrowDown';
+		if (key === 'PageUp') key = 'ArrowUp';
 		if (key === 'ArrowDown') {
 			idx = (idx + 1) % items.length;
 		} else if (key === 'ArrowUp') {
