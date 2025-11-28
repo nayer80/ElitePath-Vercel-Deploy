@@ -339,7 +339,34 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	});
 
-	function focusOption(options, idx) {
+	function escapeHtml(str) {
+		return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+	}
+
+	function clearHighlights(options) {
+		options.forEach(o => {
+			const txt = (o.getAttribute('data-value') || o.textContent || '').trim();
+			o.innerHTML = escapeHtml(txt);
+		});
+	}
+
+	function highlightMatch(options, idx, buff) {
+		// buff should be lowercased
+		options.forEach((o, i) => {
+			const text = (o.textContent || '').trim();
+			const lower = text.toLowerCase();
+			if (i === idx && buff && lower.startsWith(buff)) {
+				const prefix = text.substring(0, buff.length);
+				const rest = text.substring(buff.length);
+				o.innerHTML = escapeHtml(prefix) + '<span class="match">' + escapeHtml(rest).replace(/^/, '') + '</span>';
+				// above: wrap the remainder in .match (visual preference)
+			} else {
+				o.innerHTML = escapeHtml(text);
+			}
+		});
+	}
+
+	function focusOption(options, idx, buff) {
 		const prev = options.find(o => o.getAttribute('tabindex') === '0' || o.getAttribute('aria-selected') === 'true');
 		if (prev) {
 			prev.setAttribute('tabindex','-1');
@@ -349,6 +376,13 @@ document.addEventListener('DOMContentLoaded', () => {
 		if (!el) return;
 		el.setAttribute('tabindex','0');
 		el.setAttribute('aria-selected','true');
+		// apply highlight if buffer present
+		if (typeof buff === 'string' && buff.length > 0) {
+			highlightMatch(options, idx, buff.toLowerCase());
+		} else {
+			// clear highlights
+			clearHighlights(options);
+		}
 		try { el.focus(); } catch (e) {}
 	}
 });
