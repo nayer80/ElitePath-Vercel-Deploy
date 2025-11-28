@@ -188,6 +188,36 @@ a{color:inherit}
 .visa-form select,.visa-form input{padding:12px;border:1px solid #e6e6e6;border-radius:6px;font-size:1rem}
 .apply-btn{background:var(--primary);color:var(--text-on-primary);border:0;padding:14px 20px;border-radius:8px;font-weight:800;cursor:pointer;width:100%;max-width:420px;margin:0 auto;display:block}
 
+/* Custom select component: visually match .visa-form select and position dropdown */
+.custom-select{position:relative;display:block;width:100%;max-width:100%}
+.custom-select .select-trigger{
+	padding:12px;
+	border:1px solid #e6e6e6;
+	border-radius:6px;
+	font-size:1rem;
+	background:#fff;
+	cursor:pointer;
+}
+.custom-select .select-trigger:focus{outline:2px solid #cfcfcf}
+.custom-select .select-options{
+	position:absolute;
+	top:100%;
+	left:0;
+	right:0;
+	z-index:50;
+	background:#fff;
+	border:1px solid #e6e6e6;
+	border-radius:6px;
+	box-shadow:0 8px 24px rgba(12,20,30,0.06);
+	margin-top:6px;
+	display:none;
+	max-height:220px;
+	overflow:auto;
+}
+.custom-select.open .select-options{display:block}
+.custom-select .option{padding:10px 12px;cursor:pointer}
+.custom-select .option:hover{background:#f5f5f5}
+
 /* Visa listing grid */
 .visa-listing{margin-top:20px}
 .visa-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}

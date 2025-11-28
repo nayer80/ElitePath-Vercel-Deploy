@@ -97,26 +97,38 @@
 			<div class="visa-page">
 				<h1 class="visa-title">Visa</h1>
 				<div class="visa-card-container">
-					<form class="visa-form" aria-label="Visa application form">
-						<div class="field">
-							<label for="destination">Destination</label>
-							<select id="destination" name="destination">
-								<option value="">Select destination</option>
-								<option>United Arab Emirates</option>
-								<option>India</option>
-								<option>United Kingdom</option>
-							</select>
-						</div>
+						<form class="visa-form" aria-label="Visa application form">
+							<div class="field">
+								<label for="destination">Destination</label>
+								<div class="custom-select" data-select-name="destination">
+									<input type="hidden" name="destination" value="">
+									<div id="destination" class="select-trigger" role="button" tabindex="0" aria-haspopup="listbox" aria-expanded="false">
+										Select destination
+									</div>
+									<div class="select-options" role="listbox" aria-labelledby="destination">
+										<div class="option" role="option" data-value="">Select destination</div>
+										<div class="option" role="option" data-value="United Arab Emirates">United Arab Emirates</div>
+										<div class="option" role="option" data-value="India">India</div>
+										<div class="option" role="option" data-value="United Kingdom">United Kingdom</div>
+									</div>
+								</div>
+							</div>
 
-						<div class="field">
-							<label for="nationality">Nationality</label>
-							<select id="nationality" name="nationality">
-								<option value="">Select nationality</option>
-								<option>United States</option>
-								<option>India</option>
-								<option>Canada</option>
-							</select>
-						</div>
+							<div class="field">
+								<label for="nationality">Nationality</label>
+								<div class="custom-select" data-select-name="nationality">
+									<input type="hidden" name="nationality" value="">
+									<div id="nationality" class="select-trigger" role="button" tabindex="0" aria-haspopup="listbox" aria-expanded="false">
+										Select nationality
+									</div>
+									<div class="select-options" role="listbox" aria-labelledby="nationality">
+										<div class="option" role="option" data-value="">Select nationality</div>
+										<div class="option" role="option" data-value="United States">United States</div>
+										<div class="option" role="option" data-value="India">India</div>
+										<div class="option" role="option" data-value="Canada">Canada</div>
+									</div>
+								</div>
+							</div>
 
 						<div class="field">
 							<button type="submit" class="apply-btn">APPLY NOW</button>

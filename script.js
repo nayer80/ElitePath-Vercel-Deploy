@@ -145,5 +145,63 @@ document.addEventListener('DOMContentLoaded', () => {
 	window.addEventListener('resize', () => {
 		if (window.innerWidth >= 900) setOpen(false);
 	});
+
+	// --- Custom select components initialization -------------------------------------------------
+
+	function initCustomSelects() {
+		const selects = Array.from(document.querySelectorAll('.custom-select'));
+		selects.forEach(cs => {
+			const hidden = cs.querySelector('input[type="hidden"]');
+			const trigger = cs.querySelector('.select-trigger');
+			const options = Array.from(cs.querySelectorAll('.option'));
+			if (!hidden || !trigger) return;
+
+			// Toggle open/close on trigger click
+			trigger.addEventListener('click', (ev) => {
+				ev.stopPropagation();
+				const isOpen = cs.classList.toggle('open');
+				trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+			});
+
+			// keyboard handling for trigger (Enter / Space / Escape)
+			trigger.addEventListener('keydown', (ev) => {
+				if (ev.key === 'Enter' || ev.key === ' ') {
+					ev.preventDefault(); trigger.click();
+				}
+				if (ev.key === 'Escape') {
+					cs.classList.remove('open');
+					trigger.setAttribute('aria-expanded','false');
+				}
+			});
+
+			// option selection
+			options.forEach(opt => {
+				opt.addEventListener('click', (e) => {
+					e.stopPropagation();
+					const val = opt.getAttribute('data-value') || '';
+					const label = (opt.textContent || '').trim();
+					hidden.value = val;
+					// update trigger text
+					trigger.textContent = label;
+					cs.classList.remove('open');
+					trigger.setAttribute('aria-expanded','false');
+				});
+			});
+		});
+
+		// click outside closes any open custom-select
+		document.addEventListener('click', (ev) => {
+			const open = document.querySelectorAll('.custom-select.open');
+			open.forEach(os => {
+				if (!os.contains(ev.target)) {
+					os.classList.remove('open');
+					const t = os.querySelector('.select-trigger');
+					if (t) t.setAttribute('aria-expanded','false');
+				}
+			});
+		});
+	}
+
+	initCustomSelects();
 });
 
