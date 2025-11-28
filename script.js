@@ -385,5 +385,26 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 		try { el.focus(); } catch (e) {}
 	}
+
+	// Visa form submit: redirect to visa-usa.html when United States (data-value 'US') is selected
+	const visaForm = document.querySelector('.visa-form');
+	if (visaForm) {
+		visaForm.addEventListener('submit', (e) => {
+			e.preventDefault();
+			const destInput = visaForm.querySelector('input[name="destination"]');
+			const dest = destInput ? (destInput.value || '').trim() : '';
+			// if user selected US (data-value is 'US' in markup), redirect to the new page
+			if (dest === 'US' || dest.toLowerCase() === 'united states') {
+				window.location.href = 'visa-usa.html';
+				return;
+			}
+			// fallback: simple validation message
+			if (!dest) {
+				alert('Please select a destination before applying.');
+			} else {
+				alert('No specific page available for this destination yet.');
+			}
+		});
+	}
 });
 
