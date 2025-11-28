@@ -5,6 +5,8 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
 	<title>Elite Path — Travel</title>
 	<link rel="stylesheet" href="styles.css">
+	<!-- Flatpickr stylesheet -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 	<!-- Font Awesome for nav icons -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-C8C+9b3z1+YqKkKQY8lq6c3K0y5mWq9QG1Kx1Ff9YvV0w5eQ1r0eZrZg2hKz8Yz1q1G6rO1Y2uQY1e2Z3b4c5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<!-- moved styles to styles.css -->
@@ -126,6 +128,26 @@
 											<!-- options will be populated by script.js -->
 										</div>
 								</div>
+
+								<!-- Place of Residency (custom select) -->
+								<div class="field">
+									<label for="living">Place of Residency</label>
+									<div class="custom-select" data-select-name="living">
+										<input type="hidden" name="living" value="">
+										<div id="living" class="select-trigger" role="button" tabindex="0" aria-haspopup="listbox" aria-expanded="false">
+											Select Residency Country
+										</div>
+										<div class="select-options" role="listbox" aria-labelledby="living">
+											<!-- options will be populated by script.js -->
+										</div>
+									</div>
+								</div>
+
+								<!-- Desired Travel Date (flatpickr) -->
+								<div class="field">
+									<label for="travel-date">Desired Travel Date</label>
+									<input type="text" id="travel-date" name="travel-date" placeholder="Select a date" class="flatpickr-input" />
+								</div>
 							</div>
 
 						<div class="field">
@@ -177,6 +199,8 @@
 		</section>
 	</main>
 
+	<!-- Flatpickr JS -->
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 	<script src="script.js"></script>
 </body>
 </html>

@@ -173,18 +173,19 @@ document.addEventListener('DOMContentLoaded', () => {
     "Zambia","Zimbabwe"
 ];
 
-	function populateNationalityDropdown() {
-		const nationalityOptionsContainer = document.querySelector('.custom-select[data-select-name="nationality"] .select-options');
-		if (!nationalityOptionsContainer) return;
+	function populateCountrySelect(selectName, defaultLabel) {
+		const selector = `.custom-select[data-select-name="${selectName}"] .select-options`;
+		const optionsContainer = document.querySelector(selector);
+		if (!optionsContainer) return;
 		// clear existing
-		nationalityOptionsContainer.innerHTML = '';
-		// prepend default, non-selectable initial option
+		optionsContainer.innerHTML = '';
+		// prepend default initial option
 		const defaultOpt = document.createElement('div');
 		defaultOpt.className = 'option';
 		defaultOpt.setAttribute('role', 'option');
 		defaultOpt.setAttribute('data-value', '');
-		defaultOpt.textContent = 'Select nationality';
-		nationalityOptionsContainer.appendChild(defaultOpt);
+		defaultOpt.textContent = defaultLabel;
+		optionsContainer.appendChild(defaultOpt);
 
 		allCountries.forEach(country => {
 			const el = document.createElement('div');
@@ -192,12 +193,13 @@ document.addEventListener('DOMContentLoaded', () => {
 			el.setAttribute('role', 'option');
 			el.setAttribute('data-value', country);
 			el.textContent = country;
-			nationalityOptionsContainer.appendChild(el);
+			optionsContainer.appendChild(el);
 		});
 	}
 
-	// populate now so initCustomSelects will attach handlers to options
-	populateNationalityDropdown();
+	// populate both nationality and residency selects before initializing components
+	populateCountrySelect('nationality', 'Select nationality');
+	populateCountrySelect('living', 'Select Residency Country');
 
 	// --- Custom select components initialization -------------------------------------------------
 
@@ -270,6 +272,16 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	initCustomSelects();
+
+	// initialize flatpickr for the travel date input (if flatpickr loaded)
+	if (typeof flatpickr === 'function') {
+		try {
+			flatpickr("#travel-date", {
+				minDate: "today",
+				dateFormat: "Y-m-d",
+			});
+		} catch (e) { /* ignore if flatpickr not available */ }
+	}
 
 	// Type-ahead buffer for option search
 	let searchBuffer = '';

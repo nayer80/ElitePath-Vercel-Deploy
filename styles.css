@@ -226,6 +226,21 @@ a{color:inherit}
 	font-weight: 700;
 }
 
+/* Flatpickr theming to match project primary color */
+.flatpickr-calendar{border-radius:10px;box-shadow:0 12px 28px rgba(12,20,30,0.10);}
+.flatpickr-months .flatpickr-current-month{color:var(--primary);font-weight:700}
+.flatpickr-day:hover{background:rgba(0,0,0,0.04)}
+.flatpickr-day.today{box-shadow:inset 0 0 0 1px rgba(0,0,0,0.06)}
+.flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange{
+    background: var(--primary) !important;
+    color: var(--text-on-primary) !important;
+    border-color: var(--primary) !important;
+}
+.flatpickr-day.selected:hover, .flatpickr-day.startRange:hover, .flatpickr-day.endRange:hover{
+    opacity: 0.95;
+}
+
+
 /* Visa listing grid */
 .visa-listing{margin-top:20px}
 .visa-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
