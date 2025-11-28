@@ -209,11 +209,31 @@ document.addEventListener('DOMContentLoaded', () => {
 			const options = Array.from(cs.querySelectorAll('.option'));
 			if (!hidden || !trigger) return;
 
+			// Make options programmatically focusable and initialize aria-selected
+			options.forEach((opt, i) => {
+				opt.setAttribute('tabindex', '-1');
+				if (opt.getAttribute('aria-selected') === 'true') {
+					opt.setAttribute('tabindex', '0');
+				}
+			});
+
 			// Toggle open/close on trigger click
 			trigger.addEventListener('click', (ev) => {
 				ev.stopPropagation();
 				const isOpen = cs.classList.toggle('open');
 				trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+
+				if (isOpen) {
+					// when opening, focus the first option (or the selected one)
+					const opts = Array.from(cs.querySelectorAll('.option'));
+					if (opts.length) {
+						let selIdx = opts.findIndex(o => o.getAttribute('aria-selected') === 'true');
+						if (selIdx < 0) selIdx = 0;
+						opts.forEach(o => o.setAttribute('tabindex','-1'));
+						opts[selIdx].setAttribute('tabindex','0');
+						opts[selIdx].focus();
+					}
+				}
 			});
 
 			// keyboard handling for trigger (Enter / Space / Escape)
@@ -231,13 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			options.forEach(opt => {
 				opt.addEventListener('click', (e) => {
 					e.stopPropagation();
-					const val = opt.getAttribute('data-value') || '';
-					const label = (opt.textContent || '').trim();
-					hidden.value = val;
-					// update trigger text
-					trigger.textContent = label;
-					cs.classList.remove('open');
-					trigger.setAttribute('aria-expanded','false');
+					selectOption(cs, opt, trigger, hidden);
 				});
 			});
 		});
@@ -256,5 +270,65 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	initCustomSelects();
+
+	// Helper to perform selection logic for an option
+	function selectOption(container, optionEl, triggerEl, hiddenInput) {
+		const val = optionEl.getAttribute('data-value') || '';
+		const label = (optionEl.textContent || '').trim();
+		hiddenInput.value = val;
+		triggerEl.textContent = label;
+		// mark aria-selected
+		const opts = Array.from(container.querySelectorAll('.option'));
+		opts.forEach(o => o.removeAttribute('aria-selected'));
+		optionEl.setAttribute('aria-selected', 'true');
+		// close
+		container.classList.remove('open');
+		triggerEl.setAttribute('aria-expanded','false');
+		// return focus to trigger
+		try { triggerEl.focus(); } catch (e) {}
+	}
+
+	// Keyboard navigation for open custom-selects
+	document.addEventListener('keydown', (ev) => {
+		const active = document.querySelector('.custom-select.open');
+		if (!active) return;
+		const options = Array.from(active.querySelectorAll('.option'));
+		if (!options.length) return;
+		const key = ev.key;
+		if (!['ArrowDown','ArrowUp','Home','End','Enter',' '].includes(key)) return;
+		ev.preventDefault();
+		let idx = options.indexOf(document.activeElement);
+		if (key === 'ArrowDown') {
+			if (idx === -1) idx = 0; else idx = (idx + 1) % options.length;
+			focusOption(options, idx);
+		} else if (key === 'ArrowUp') {
+			if (idx === -1) idx = options.length - 1; else idx = (idx - 1 + options.length) % options.length;
+			focusOption(options, idx);
+		} else if (key === 'Home') {
+			focusOption(options, 0);
+		} else if (key === 'End') {
+			focusOption(options, options.length - 1);
+		} else if (key === 'Enter' || key === ' ') {
+			if (idx === -1) idx = 0;
+			const opt = options[idx];
+			const container = active;
+			const triggerEl = container.querySelector('.select-trigger');
+			const hidden = container.querySelector('input[type="hidden"]');
+			if (opt && triggerEl && hidden) selectOption(container, opt, triggerEl, hidden);
+		}
+	});
+
+	function focusOption(options, idx) {
+		const prev = options.find(o => o.getAttribute('tabindex') === '0' || o.getAttribute('aria-selected') === 'true');
+		if (prev) {
+			prev.setAttribute('tabindex','-1');
+			prev.removeAttribute('aria-selected');
+		}
+		const el = options[idx];
+		if (!el) return;
+		el.setAttribute('tabindex','0');
+		el.setAttribute('aria-selected','true');
+		try { el.focus(); } catch (e) {}
+	}
 });
 
