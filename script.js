@@ -271,6 +271,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	initCustomSelects();
 
+	// Type-ahead buffer for option search
+	let searchBuffer = '';
+	let lastKeyPressTime = 0;
+
 	// Helper to perform selection logic for an option
 	function selectOption(container, optionEl, triggerEl, hiddenInput) {
 		const val = optionEl.getAttribute('data-value') || '';
@@ -295,6 +299,23 @@ document.addEventListener('DOMContentLoaded', () => {
 		const options = Array.from(active.querySelectorAll('.option'));
 		if (!options.length) return;
 		const key = ev.key;
+		// Type-ahead: alphanumeric single characters
+		if (key.length === 1 && /^[a-z0-9]$/i.test(key)) {
+			// debounce buffer: reset if more than 500ms since last key
+			const now = Date.now();
+			if (now - lastKeyPressTime > 500) searchBuffer = '';
+			searchBuffer += key.toLowerCase();
+			lastKeyPressTime = now;
+			// search options for first match starting with buffer
+			const buff = searchBuffer;
+			const matchIdx = options.findIndex(o => (o.textContent || '').trim().toLowerCase().startsWith(buff));
+			if (matchIdx >= 0) {
+				focusOption(options, matchIdx);
+				// ensure the focused option is visible
+				try { options[matchIdx].scrollIntoView({block: 'nearest'}); } catch (e) {}
+			}
+			return;
+		}
 		if (!['ArrowDown','ArrowUp','Home','End','Enter',' '].includes(key)) return;
 		ev.preventDefault();
 		let idx = options.indexOf(document.activeElement);
