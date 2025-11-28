@@ -19,33 +19,35 @@
     input[type=range]{vertical-align:middle}
     .cols{display:flex;gap:12px}
     .panel{flex:1}
+    .controls-easing{margin-top:8px;align-items:center}
+    .ease-buttons{display:flex;gap:8px;align-items:center}
   </style>
 </head>
 <body>
   <div class="wrap">
     <h2>Visual Compare — Overlay screenshot over local page</h2>
     <div class="controls">
-      <label class="small">Upload screenshot:</label>
-      <input id="screenshot" type="file" accept="image/*">
+      <label class="small" for="screenshot">Upload screenshot:</label>
+      <input id="screenshot" type="file" accept="image/*" title="Upload screenshot" aria-label="Upload screenshot">
       <label class="small">Opacity</label>
-      <input id="opacity" type="range" min="0" max="1" step="0.01" value="0.6">
+      <input id="opacity" type="range" min="0" max="1" step="0.01" value="0.6" title="Adjust overlay opacity">
       <label class="small">Scale</label>
-      <input id="scale" type="range" min="50" max="150" step="1" value="100">
+      <input id="scale" type="range" min="50" max="150" step="1" value="100" title="Adjust overlay scale">
       <label class="small">X</label>
-      <input id="offsetX" type="range" min="-500" max="500" step="1" value="0">
-      <label class="small">Y</label>
-      <input id="offsetY" type="range" min="-500" max="500" step="1" value="0">
+      <input id="offsetX" type="range" min="-500" max="500" step="1" value="0" title="Adjust horizontal offset">
+      <label class="small" for="offsetY">Y</label>
+      <input id="offsetY" type="range" min="-500" max="500" step="1" value="0" title="Adjust vertical offset" placeholder="Adjust vertical offset" aria-label="Vertical offset">
       <button id="reset" class="btn">Reset</button>
       <a class="btn btn-primary" id="openLocal" href="index.html" target="_blank">Open Live Page</a>
-    </div>
-
-    <div class="controls" style="margin-top:8px;align-items:center;">
+    <div class="controls controls-easing">
       <label class="small">Menu Easing Preview:</label>
-      <div style="display:flex;gap:8px;align-items:center">
+      <label class="small">Menu Easing Preview:</label>
+      <div class="ease-buttons">
         <button class="btn" data-ease="cubic-bezier(0.25, 0.46, 0.45, 0.94)">Current</button>
         <button class="btn" data-ease="cubic-bezier(0.33, 1, 0.68, 1)">Snappier</button>
         <button class="btn" data-ease="cubic-bezier(0.4, 0, 0.2, 1)">Smooth</button>
       </div>
+    </div>
     </div>
 
     <div class="viewer" id="viewer">
