@@ -201,6 +201,20 @@ document.addEventListener('DOMContentLoaded', () => {
 	populateCountrySelect('nationality', 'Select nationality');
 	populateCountrySelect('living', 'Select Residency Country');
 
+	// Load visa mappings JSON (data/visa-mapping.json) so filtering can be data-driven
+	window.visaMappings = {};
+	fetch('data/visa-mapping.json').then(resp => {
+		if (!resp.ok) throw new Error('Failed to load visa mappings');
+		return resp.json();
+	}).then(json => {
+		window.visaMappings = json || {};
+		// optional: console.debug the loaded mappings for dev
+		console.debug('visaMappings loaded', window.visaMappings);
+	}).catch(err => {
+		console.warn('Could not load data/visa-mapping.json:', err);
+		window.visaMappings = {};
+	});
+
 	// --- Custom select components initialization -------------------------------------------------
 
 	function initCustomSelects() {
@@ -219,6 +233,8 @@ document.addEventListener('DOMContentLoaded', () => {
 				}
 			});
 
+			// attach handlers for the options (click etc.)
+			addOptionHandlers(cs);
 			// Toggle open/close on trigger click
 			trigger.addEventListener('click', (ev) => {
 				ev.stopPropagation();
@@ -249,13 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				}
 			});
 
-			// option selection
-			options.forEach(opt => {
-				opt.addEventListener('click', (e) => {
-					e.stopPropagation();
-					selectOption(cs, opt, trigger, hidden);
-				});
-			});
+
 		});
 
 		// click outside closes any open custom-select
@@ -273,12 +283,61 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	initCustomSelects();
 
+	// helper: attach click handlers to options inside a custom-select container
+	function addOptionHandlers(cs) {
+		const trigger = cs.querySelector('.select-trigger');
+		const hidden = cs.querySelector('input[type="hidden"]');
+		const opts = Array.from(cs.querySelectorAll('.option'));
+		opts.forEach(opt => {
+			opt.setAttribute('tabindex','-1');
+			opt.addEventListener('click', (e) => {
+				e.stopPropagation();
+				selectOption(cs, opt, trigger, hidden);
+			});
+		});
+	}
+
+	// update the options of a named custom-select from a list of items
+	function updateSelectFromList(selectName, items, defaultLabel) {
+		const container = document.querySelector(`.custom-select[data-select-name="${selectName}"]`);
+		if (!container) return;
+		const optionsContainer = container.querySelector('.select-options');
+		const trigger = container.querySelector('.select-trigger');
+		const hidden = container.querySelector('input[type="hidden"]');
+		optionsContainer.innerHTML = '';
+		// default option
+		const def = document.createElement('div');
+		def.className = 'option';
+		def.setAttribute('role','option');
+		def.setAttribute('data-value','');
+		def.textContent = defaultLabel;
+		optionsContainer.appendChild(def);
+		items.forEach(it => {
+			const el = document.createElement('div');
+			el.className = 'option';
+			el.setAttribute('role','option');
+			el.setAttribute('data-value', it);
+			el.textContent = it;
+			optionsContainer.appendChild(el);
+		});
+		// reset selection
+		if (hidden) hidden.value = '';
+		if (trigger) trigger.textContent = defaultLabel;
+		// wire handlers for the newly created options
+		addOptionHandlers(container);
+	}
+
 	// initialize flatpickr for the travel date input (if flatpickr loaded)
 	if (typeof flatpickr === 'function') {
 		try {
 			flatpickr("#travel-date", {
 				minDate: "today",
-				dateFormat: "Y-m-d",
+				dateFormat: "d/m/Y",
+				onChange: function(selectedDates, dateStr, instance) {
+					// mirror into the hidden expected-date field (dd/mm/yyyy)
+					const mirror = document.getElementById('txtExpectedDate');
+					if (mirror) mirror.value = dateStr || '';
+				}
 			});
 		} catch (e) { /* ignore if flatpickr not available */ }
 	}
@@ -302,6 +361,50 @@ document.addEventListener('DOMContentLoaded', () => {
 		triggerEl.setAttribute('aria-expanded','false');
 		// return focus to trigger
 		try { triggerEl.focus(); } catch (e) {}
+
+		// If this was the destination select, notify filtering logic
+		try {
+			const cname = container.getAttribute('data-select-name');
+			if (cname === 'destination') {
+				getNationalityLiving(val);
+			}
+		} catch (e) { /* ignore */ }
+	}
+
+	// Implement GetNationalityLiving behavior: filter nationality and living lists
+	function getNationalityLiving(destinationValue) {
+		const destNorm = (destinationValue || '').trim();
+		let natList = allCountries;
+		let livingList = allCountries;
+		// prefer data-driven mapping if present
+		try {
+			const maps = window.visaMappings || {};
+			let mapping = null;
+			// direct key match (case-sensitive)
+			if (maps[destNorm]) mapping = maps[destNorm];
+			// case-insensitive key match
+			if (!mapping) {
+				const found = Object.keys(maps).find(k => k.toLowerCase() === destNorm.toLowerCase());
+				if (found) mapping = maps[found];
+			}
+			// try common-name heuristics to map to codes like 'US' or 'IN'
+			if (!mapping) {
+				if (/united states|us|usa/i.test(destNorm) && maps['US']) mapping = maps['US'];
+				else if (/india/i.test(destNorm) && maps['IN']) mapping = maps['IN'];
+			}
+			// if mapping found, prefer allowed_nationalities/allowed_residencies fields
+			if (mapping) {
+				if (Array.isArray(mapping.allowed_nationalities)) natList = mapping.allowed_nationalities;
+				else if (Array.isArray(mapping.nationalities)) natList = mapping.nationalities;
+				if (Array.isArray(mapping.allowed_residencies)) livingList = mapping.allowed_residencies;
+				else if (Array.isArray(mapping.livings)) livingList = mapping.livings;
+			}
+		} catch (e) {
+			console.warn('Error applying visaMappings', e);
+		}
+
+		updateSelectFromList('nationality', natList, 'Select nationality');
+		updateSelectFromList('living', livingList, 'Select Residency Country');
 	}
 
 	// Keyboard navigation for open custom-selects

@@ -103,7 +103,7 @@
 							<div class="field">
 								<label for="destination">Destination</label>
 								<div class="custom-select" data-select-name="destination">
-									<input type="hidden" name="destination" value="">
+									<input type="hidden" id="ddlVisaCountry" name="destination" value="">
 									<div id="destination" class="select-trigger" role="button" tabindex="0" aria-haspopup="listbox" aria-expanded="false">
 										Select destination
 									</div>
@@ -120,7 +120,7 @@
 							<div class="field">
 								<label for="nationality">Nationality</label>
 								<div class="custom-select" data-select-name="nationality">
-									<input type="hidden" name="nationality" value="">
+									<input type="hidden" id="ddlVisaNationality" name="nationality" value="">
 									<div id="nationality" class="select-trigger" role="button" tabindex="0" aria-haspopup="listbox" aria-expanded="false">
 										Select nationality
 									</div>
@@ -133,7 +133,7 @@
 								<div class="field">
 									<label for="living">Place of Residency</label>
 									<div class="custom-select" data-select-name="living">
-										<input type="hidden" name="living" value="">
+										<input type="hidden" id="ddlLiving" name="living" value="">
 										<div id="living" class="select-trigger" role="button" tabindex="0" aria-haspopup="listbox" aria-expanded="false">
 											Select Residency Country
 										</div>
@@ -147,6 +147,8 @@
 								<div class="field">
 									<label for="travel-date">Desired Travel Date</label>
 									<input type="text" id="travel-date" name="travel-date" placeholder="Select a date" class="flatpickr-input" />
+									<!-- reference alias for integration: mirror formatted date (dd/mm/yyyy) -->
+									<input type="hidden" id="txtExpectedDate" name="txtExpectedDate" value="" />
 								</div>
 							</div>
 

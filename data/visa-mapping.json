@@ -1,0 +1,18 @@
+{
+  "US": {
+    "allowed_nationalities": ["United States", "Canada", "Mexico", "United Kingdom"],
+    "allowed_residencies": ["United States", "Canada", "Mexico", "Saudi Arabia"]
+  },
+  "IN": {
+    "allowed_nationalities": ["India", "Pakistan", "Bangladesh", "Sri Lanka"],
+    "allowed_residencies": ["India", "United Arab Emirates", "United Kingdom", "United States"]
+  },
+  "Schengen": {
+    "allowed_nationalities": ["France", "Germany", "Italy", "Spain", "Netherlands"],
+    "allowed_residencies": ["France", "Germany", "Spain", "Belgium"]
+  },
+  "UK": {
+    "allowed_nationalities": ["United Kingdom", "Ireland", "Australia", "Canada"],
+    "allowed_residencies": ["United Kingdom", "United States", "Australia"]
+  }
+}
