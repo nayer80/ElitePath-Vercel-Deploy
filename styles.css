@@ -270,6 +270,14 @@ a{color:inherit}
 .select_bx .svgBG5[aria-hidden="true"]{opacity:0.95}
 .select-trigger .trigger-label{flex:1}
 
+/* Typography refinements: closer to reference */
+.select_bx .select-trigger .trigger-label{font-weight:600;color:#333;letter-spacing:0.0px}
+.custom-select .option{font-weight:500;color:#333}
+
+/* flatpickr / input placeholder styling to match sample */
+#travel-date::placeholder, .flatpickr-input::placeholder{color:#8b8b8b;opacity:1;font-weight:500}
+#travel-date{font-weight:600;color:#333}
+
 /* Chevron rotation when dropdown opens */
 .custom-select .svgBG1.ArrowDownRight{transition:transform 220ms cubic-bezier(.2,.9,.2,1)}
 .custom-select.open .svgBG1.ArrowDownRight{transform:rotate(180deg)}
