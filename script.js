@@ -306,6 +306,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	initCustomSelects();
 
+	// Prevent document-level click handler from closing things when interacting
+	// with the date input / Flatpickr. Some browsers/lifecycles create the
+	// calendar element after the click event, so we also stop propagation on
+	// the input wrapper and the input itself for pointer/click events.
+	(function guardFlatpickrClicks(){
+		const wrap = document.querySelector('.rich-datepicker-wrap');
+		const input = document.getElementById('travel-date');
+		function stop(ev){ try{ ev.stopPropagation(); }catch(e){} }
+		if (wrap) {
+			wrap.addEventListener('pointerdown', stop);
+			wrap.addEventListener('click', stop);
+		}
+		if (input) {
+			input.addEventListener('pointerdown', stop);
+			input.addEventListener('click', stop);
+		}
+	})();
+
 	// helper: attach click handlers to options inside a custom-select container
 	function addOptionHandlers(cs) {
 		const trigger = cs.querySelector('.select-trigger');
