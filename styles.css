@@ -278,12 +278,9 @@ a{color:inherit}
 /* Typography refinements: closer to reference */
 .select_bx .select-trigger .trigger-label{font-weight:600;color:#333;letter-spacing:0.0px}
 
-/* Visual style: show only the left icon and chevron in compact mode (hide label text)
-	while keeping the accessible label via aria-label on the trigger. */
-.select_bx .select-trigger .trigger-label{display:none}
+/* Keep trigger label visible (do not hide). */
+/* If you want a compact icon-only style later, toggle a class instead of globally hiding the label. */
 
-/* Hide placeholder visually for the compact date input so the calendar icon represents it */
-.rich-datepicker-wrap .flatpickr-input::placeholder{color:transparent}
 .custom-select .option{font-weight:500;color:#333;letter-spacing:0.08px;line-height:1.35;font-size:13px}
 
 /* flatpickr / input placeholder styling to match sample */
