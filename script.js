@@ -274,14 +274,25 @@ document.addEventListener('DOMContentLoaded', () => {
 		document.addEventListener('click', (ev) => {
 			// if the click is within Flatpickr's calendar or the date input wrapper,
 			// do not treat it as an outside click for custom-selects.
-			if (ev.target instanceof Element && (
-				ev.target.closest('.flatpickr-calendar') ||
-				ev.target.closest('.flatpickr-wrapper') ||
-				ev.target.closest('.flatpickr-input') ||
-				ev.target.closest('.rich-datepicker-wrap')
-			)) {
-				return;
+			// Modern browsers provide composedPath() which lists nodes through shadow DOM
+			// and includes elements appended to <body> by libraries like Flatpickr.
+			let path = [];
+			if (typeof ev.composedPath === 'function') {
+				path = ev.composedPath();
+			} else if (Array.isArray(ev.path)) {
+				path = ev.path;
+			} else {
+				// Fallback: use target and traverse up via parentNode
+				let n = ev.target;
+				while (n) { path.push(n); n = n.parentNode; }
 			}
+			const clickedInsideFP = path.some(el => {
+				try {
+					if (!el || !el.classList) return false;
+					return el.classList.contains('flatpickr-calendar') || el.classList.contains('flatpickr-wrapper') || el.classList.contains('flatpickr-input') || el.classList.contains('rich-datepicker-wrap');
+				} catch (e) { return false; }
+			});
+			if (clickedInsideFP) return;
 			const open = document.querySelectorAll('.custom-select.open');
 			open.forEach(os => {
 				if (!os.contains(ev.target)) {
