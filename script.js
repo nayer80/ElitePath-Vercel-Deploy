@@ -268,8 +268,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		});
 
-		// click outside closes any open custom-select
+		// click outside closes any open custom-select, but ignore clicks inside Flatpickr
+		// (calendar popup, its wrapper, or the date input area) so the date picker
+		// doesn't immediately close when a user clicks to pick a date.
 		document.addEventListener('click', (ev) => {
+			// if the click is within Flatpickr's calendar or the date input wrapper,
+			// do not treat it as an outside click for custom-selects.
+			if (ev.target instanceof Element && (
+				ev.target.closest('.flatpickr-calendar') ||
+				ev.target.closest('.flatpickr-wrapper') ||
+				ev.target.closest('.flatpickr-input') ||
+				ev.target.closest('.rich-datepicker-wrap')
+			)) {
+				return;
+			}
 			const open = document.querySelectorAll('.custom-select.open');
 			open.forEach(os => {
 				if (!os.contains(ev.target)) {
