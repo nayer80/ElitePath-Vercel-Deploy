@@ -240,6 +240,14 @@ a{color:inherit}
     opacity: 0.95;
 }
 
+/* Small wrapper and icon styles to match reference structure */
+.select_bx{display:flex;align-items:center;gap:8px}
+.select_bx .svgBG5{width:20px;height:20px;display:inline-block;background-size:contain;background-repeat:no-repeat}
+.select_bx .svgBG1.ArrowDownRight{width:14px;height:14px;display:inline-block;margin-left:6px;background-size:contain;background-repeat:no-repeat}
+.select_bx .select-trigger.inputselectbox{flex:1}
+.rich-datepicker-wrap .flatpickr-input{padding-left:36px}
+.select_bx.rich-datepicker-wrap .svgBG5.calIcon{margin-right:8px}
+
 
 /* Visa listing grid */
 .visa-listing{margin-top:20px}
