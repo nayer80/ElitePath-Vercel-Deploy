@@ -309,3 +309,20 @@ a{color:inherit}
 	.visa-form select{flex:1}
 }
 
+/* USA visa page specific styles */
+:root{--visa-accent:#e4572e}
+.usa-visa-grid{display:grid;grid-template-columns:320px 1fr;gap:28px;align-items:start}
+.visa-summary-box{background:linear-gradient(180deg, rgba(228,87,46,0.06), rgba(228,87,46,0.02));border-left:6px solid var(--visa-accent);padding:18px;border-radius:8px}
+.visa-summary-box h3{margin:0 0 8px 0;font-size:1.1rem;color:var(--visa-accent)}
+.visa-summary-box .summary-list{list-style:none;padding:0;margin:8px 0 12px 0;color:#333}
+.visa-summary-box .summary-list li{margin-bottom:6px;font-weight:600}
+.visa-summary-box .visa-fee{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
+.visa-summary-box .visa-fee .fee-pill{background:var(--visa-accent);color:#fff;padding:10px 14px;border-radius:8px;font-weight:800}
+.visa-summary-box .requirements-title{margin-top:16px;font-size:0.95rem;font-weight:800;color:#333}
+.usa-requirements{margin-top:10px;padding-left:16px}
+.usa-requirements li{margin-bottom:8px;font-weight:700;color:#222}
+
+@media(max-width:899px){
+    .usa-visa-grid{grid-template-columns:1fr;}
+}
+
