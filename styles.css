@@ -184,6 +184,16 @@ a{color:inherit}
 .listing-title{margin:0 0 12px 0;font-size:1.25rem}
 .visa-form{background:#fff;padding:20px;border-radius:10px;box-shadow:0 8px 24px rgba(12,20,30,0.06);max-width:760px;margin:0 auto}
 .visa-form .field{margin-bottom:12px;display:flex;flex-direction:column;align-items:stretch}
+
+/* Layout: place the four primary visa fields in one horizontal row on wide screens */
+.visa-form .flex-search-row{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap;margin-bottom:12px}
+.visa-form .flex-search-row .field{flex:1;min-width:200px;margin-bottom:0}
+.visa-form .flex-search-row .field label{display:block;margin-bottom:8px}
+
+@media (max-width:899px){
+	.visa-form .flex-search-row{flex-direction:column}
+	.visa-form .flex-search-row .field{min-width:0}
+}
 .visa-form label{font-weight:600;margin-bottom:6px}
 .visa-form select,.visa-form input{padding:12px;border:1px solid #e6e6e6;border-radius:6px;font-size:1rem}
 .apply-btn{background:var(--primary);color:var(--text-on-primary);border:0;padding:14px 20px;border-radius:8px;font-weight:800;cursor:pointer;width:100%;max-width:420px;margin:0 auto;display:block}
