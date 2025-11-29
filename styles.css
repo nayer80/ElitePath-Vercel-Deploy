@@ -255,17 +255,20 @@ a{color:inherit}
 }
 
 /* Small wrapper and icon styles to match reference structure */
-.select_bx{display:flex;align-items:center;gap:8px}
-.select_bx .svgBG5{width:20px;height:20px;display:inline-block;background-size:contain;background-repeat:no-repeat}
-.select_bx .svgBG1.ArrowDownRight{width:14px;height:14px;display:inline-block;background-size:contain;background-repeat:no-repeat;margin-left:auto}
-.select_bx .select-trigger.inputselectbox{flex:1}
-.rich-datepicker-wrap .flatpickr-input{padding-left:36px}
+.select_bx{display:flex;align-items:center;gap:8px;position:relative}
+.select_bx .svgBG5{width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;position:absolute;left:12px;top:50%;transform:translateY(-50%);pointer-events:none}
+.select_bx .svgBG5 svg{width:18px;height:18px;display:block;color:#6b6b6b}
+.select_bx .svgBG1.ArrowDownRight{width:14px;height:14px;display:inline-flex;align-items:center;justify-content:center;position:absolute;right:12px;top:50%;transform:translateY(-50%);pointer-events:none}
+.select_bx .svgBG1.ArrowDownRight svg{width:14px;height:14px;display:block;color:#6b6b6b}
+.select_bx .select-trigger.inputselectbox{flex:1;position:relative;padding-left:44px;padding-right:44px}
+.rich-datepicker-wrap .flatpickr-input{padding-left:44px}
 .select_bx.rich-datepicker-wrap .svgBG5.calIcon{margin-right:8px}
 
 /* Make trigger look like filled controls with consistent padding and rounded corners */
 .select_bx .select-trigger{display:flex;align-items:center;gap:8px;padding:12px;border-radius:10px;background:#fff;border:1px solid #e6e6e6}
 .select_bx .select-trigger.inputselectbox{padding-left:10px}
-.select_bx .svgBG5[aria-hidden="true"]{opacity:0.85}
+.select_bx .svgBG5[aria-hidden="true"]{opacity:0.95}
+.select-trigger .trigger-label{flex:1}
 
 
 /* Visa listing grid */

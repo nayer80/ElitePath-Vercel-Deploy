@@ -96,7 +96,7 @@
 
 		<!-- Visa Page Section -->
 		<section id="visa" class="container visa-section">
-			<div class="b2c-search visa-page"> ==$0
+			<div class="b2c-search visa-page">
 				<h1 class="visa-title">Visa</h1>
 				<div class="visa-card-container">
 						<form class="visa-form" aria-label="Visa application form">
@@ -104,13 +104,15 @@
 							<div class="field">
 								<label for="destination" class="visually-hidden">Destination</label>
 								<div class="select_bx">
-									<i class="svgBG5 destiIcon" aria-hidden="true"></i>
+									<i class="svgBG5 destiIcon" aria-hidden="true">
+										<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 10c0 6-9 12-9 12S3 16 3 10a9 9 0 1 1 18 0z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+									</i>
 									<div class="custom-select" data-select-name="destination">
 										<input type="hidden" id="ddlVisaCountry" name="destination" value="">
 										<div id="destination" class="select-trigger inputselectbox" role="button" tabindex="0" aria-haspopup="listbox" aria-expanded="false">
-											Select destination
+											<span class="trigger-label">Select destination</span>
+											<i class="svgBG1 ArrowDownRight" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polyline points="6 9 12 15 18 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></i>
 										</div>
-										<i class="svgBG1 ArrowDownRight" aria-hidden="true"></i>
 										<div class="select-options" role="listbox" aria-labelledby="destination">
 											<div class="option" role="option" data-value="">Select destination</div>
 											<div class="option" role="option" data-value="Canada">Canada</div>
@@ -125,13 +127,15 @@
 							<div class="field">
 								<label for="nationality" class="visually-hidden">Nationality</label>
 								<div class="select_bx">
-									<i class="svgBG5 nationalityIcon" aria-hidden="true"></i>
+									<i class="svgBG5 nationalityIcon" aria-hidden="true">
+										<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M2 12h20M12 2v20" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+									</i>
 									<div class="custom-select" data-select-name="nationality">
 										<input type="hidden" id="ddlVisaNationality" name="nationality" value="">
 										<div id="nationality" class="select-trigger inputselectbox" role="button" tabindex="0" aria-haspopup="listbox" aria-expanded="false">
-											Select nationality
+											<span class="trigger-label">Select nationality</span>
+											<i class="svgBG1 ArrowDownRight" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polyline points="6 9 12 15 18 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></i>
 										</div>
-										<i class="svgBG1 ArrowDownRight" aria-hidden="true"></i>
 										<div class="select-options" role="listbox" aria-labelledby="nationality">
 											<!-- options will be populated by script.js -->
 										</div>
@@ -143,13 +147,15 @@
 							<div class="field">
 								<label for="living" class="visually-hidden">Place of Residency</label>
 								<div class="select_bx">
-									<i class="svgBG5 destiIcon" aria-hidden="true"></i>
+									<i class="svgBG5 destiIcon" aria-hidden="true">
+										<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 10c0 6-9 12-9 12S3 16 3 10a9 9 0 1 1 18 0z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+									</i>
 									<div class="custom-select" data-select-name="living">
 										<input type="hidden" id="ddlLiving" name="living" value="">
 										<div id="living" class="select-trigger inputselectbox" role="button" tabindex="0" aria-haspopup="listbox" aria-expanded="false">
-											Select Residency Country
+											<span class="trigger-label">Select Residency Country</span>
+											<i class="svgBG1 ArrowDownRight" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polyline points="6 9 12 15 18 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></i>
 										</div>
-										<i class="svgBG1 ArrowDownRight" aria-hidden="true"></i>
 										<div class="select-options" role="listbox" aria-labelledby="living">
 											<!-- options will be populated by script.js -->
 										</div>
@@ -161,7 +167,9 @@
 								<div class="field">
 									<label for="travel-date" class="visually-hidden">Desired Travel Date</label>
 									<div class="select_bx rich-datepicker-wrap">
-										<i class="svgBG5 calIcon" aria-hidden="true"></i>
+										<i class="svgBG5 calIcon" aria-hidden="true">
+											<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M16 3v4M8 3v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 11h18" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+										</i>
 										<input type="text" id="travel-date" name="travel-date" placeholder="Select a date" class="flatpickr-input inputselectbox" />
 										<!-- reference alias for integration: mirror formatted date (dd/mm/yyyy) -->
 										<input type="hidden" id="txtExpectedDate" name="txtExpectedDate" value="" />
