@@ -187,7 +187,11 @@ a{color:inherit}
 
 /* Layout: place the four primary visa fields in one horizontal row on wide screens */
 .visa-form .flex-search-row{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap;margin-bottom:12px}
-.visa-form .flex-search-row .field{flex:1;min-width:200px;margin-bottom:0}
+.visa-form .flex-search-row .field{flex:0 0 auto;min-width:160px;margin-bottom:0}
+.visa-form .flex-search-row .field:nth-child(1){flex:0 0 25%}
+.visa-form .flex-search-row .field:nth-child(2){flex:0 0 30%}
+.visa-form .flex-search-row .field:nth-child(3){flex:0 0 25%}
+.visa-form .flex-search-row .field:nth-child(4){flex:0 0 20%}
 .visa-form .flex-search-row .field label{display:block;margin-bottom:8px}
 
 @media (max-width:899px){
@@ -253,10 +257,15 @@ a{color:inherit}
 /* Small wrapper and icon styles to match reference structure */
 .select_bx{display:flex;align-items:center;gap:8px}
 .select_bx .svgBG5{width:20px;height:20px;display:inline-block;background-size:contain;background-repeat:no-repeat}
-.select_bx .svgBG1.ArrowDownRight{width:14px;height:14px;display:inline-block;margin-left:6px;background-size:contain;background-repeat:no-repeat}
+.select_bx .svgBG1.ArrowDownRight{width:14px;height:14px;display:inline-block;background-size:contain;background-repeat:no-repeat;margin-left:auto}
 .select_bx .select-trigger.inputselectbox{flex:1}
 .rich-datepicker-wrap .flatpickr-input{padding-left:36px}
 .select_bx.rich-datepicker-wrap .svgBG5.calIcon{margin-right:8px}
+
+/* Make trigger look like filled controls with consistent padding and rounded corners */
+.select_bx .select-trigger{display:flex;align-items:center;gap:8px;padding:12px;border-radius:10px;background:#fff;border:1px solid #e6e6e6}
+.select_bx .select-trigger.inputselectbox{padding-left:10px}
+.select_bx .svgBG5[aria-hidden="true"]{opacity:0.85}
 
 
 /* Visa listing grid */
