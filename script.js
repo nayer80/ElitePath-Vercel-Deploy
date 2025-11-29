@@ -225,6 +225,14 @@ document.addEventListener('DOMContentLoaded', () => {
 			const options = Array.from(cs.querySelectorAll('.option'));
 			if (!hidden || !trigger) return;
 
+			// ensure accessible label is present on the trigger (used when we hide visible text)
+			try {
+				const tl = trigger.querySelector('.trigger-label');
+				if (tl && (tl.textContent || '').trim().length) {
+					trigger.setAttribute('aria-label', tl.textContent.trim());
+				}
+			} catch (e) { /* ignore */ }
+
 			// Make options programmatically focusable and initialize aria-selected
 			options.forEach((opt, i) => {
 				opt.setAttribute('tabindex', '-1');
@@ -363,7 +371,11 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 		// reset selection
 		if (hidden) hidden.value = '';
-		if (trigger) trigger.textContent = defaultLabel;
+		if (trigger) {
+			const tl = trigger.querySelector('.trigger-label');
+			if (tl) tl.textContent = defaultLabel;
+			trigger.setAttribute('aria-label', defaultLabel);
+		}
 		// wire handlers for the newly created options
 		addOptionHandlers(container);
 	}
@@ -392,7 +404,12 @@ document.addEventListener('DOMContentLoaded', () => {
 		const val = optionEl.getAttribute('data-value') || '';
 		const label = (optionEl.textContent || '').trim();
 		hiddenInput.value = val;
-		triggerEl.textContent = label;
+		// update the visible label span (not the whole trigger) so we don't remove icons
+		try {
+			const tl = triggerEl.querySelector('.trigger-label');
+			if (tl) tl.textContent = label;
+			triggerEl.setAttribute('aria-label', label);
+		} catch (e) { /* ignore */ }
 		// mark aria-selected
 		const opts = Array.from(container.querySelectorAll('.option'));
 		opts.forEach(o => o.removeAttribute('aria-selected'));
